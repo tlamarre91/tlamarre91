@@ -178,7 +178,6 @@ bindsym $mod+r mode "resize"
 
 ### BEGIN CUSTOM
 exec_always --no-startup-id "xmodmap ~/.config/Xmodmap"
-exec "feh --bg-scale /home/tom/Pictures/white-flowers.jpg"
 force_display_urgency_hint 300 ms
 workspace_auto_back_and_forth yes
 bindsym $mod+d exec "rofi -combi-modi window,drun -show combi -modi combi"
