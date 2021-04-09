@@ -1,0 +1,52 @@
+#!/bin/bash
+# Open a 
+
+JOURNALDIR="$HOME/Documents/journal"
+
+today() {
+    echo `date +"%Y-%m-%d"`
+}
+
+timestamp() {
+    echo "[$(date +"%H:%M")]"
+}
+
+#filename_with_subject() {
+#}
+
+while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
+    -y | --year )
+        shift; YEAR=$1
+        echo "editing all from year $YEAR"
+        cmd="nvim $JOURNALDIR/$YEAR-*.txt"
+        $cmd
+        exit;
+        ;;
+    -s | --subject )
+        shift; SUBJECT=$1
+        echo "editing all with subject $SUBJECT"
+        cmd="nvim $JOURNALDIR/*-$SUBJECT.txt"
+        $cmd
+        exit;
+        ;;
+    -l )
+        shift;
+        ls ~/Documents/journal
+        exit;
+        ;;
+esac; done
+
+if [[ -z "$1" ]]; then
+    FILE="$JOURNALDIR/$(today).txt"
+elif [[ -n "$1" ]]; then
+    FILE="$JOURNALDIR/$(today)-$1.txt"
+fi
+
+echo "editing $FILE"
+
+if [[ ! -e $FILE ]]; then
+    echo $(today) > $FILE
+fi
+
+# Put a new timestamp at the bottom of the file
+nvim "+normal Go"$'\n'"$(timestamp) " $FILE
