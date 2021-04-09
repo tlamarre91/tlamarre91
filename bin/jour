@@ -1,5 +1,5 @@
 #!/bin/bash
-# Open a 
+# Edit a file in JOURNALDIR, with filename based on the current date (or passed options)
 
 JOURNALDIR="$HOME/Documents/journal"
 
