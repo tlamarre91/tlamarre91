@@ -1,21 +1,9 @@
 call plug#begin()
-" Plug 'digitaltoad/vim-pug'
 Plug 'godlygeek/tabular'
 Plug 'janko/vim-test'
-" Plug 'jparise/vim-graphql'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/jsonc.vim'
-" Plug 'pangloss/vim-javascript'
-" Plug 'peitalin/vim-jsx-typescript'
-" Plug 'plasticboy/vim-markdown'
-" Plug 'posva/vim-vue'
 Plug 'preservim/nerdtree'
-" Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-surround'
-" Plug 'fatih/vim-go'
-" Plug 'kchmck/vim-coffee-script'
 Plug 'simnalamburt/vim-mundo'
 Plug 'tpope/vim-commentary'
 Plug 'psliwka/vim-smoothie'
@@ -75,6 +63,14 @@ require('nvim-treesitter.configs').setup{
     enable = true
   }
 }
+require('telescope').setup{
+  defaults = {
+    file_ignore_patterns = {
+      "node_modules/*",
+      "lib/*"
+    }
+  }
+}
 EOF
 
 set hidden
@@ -100,6 +96,15 @@ let g:mundo_preview_bottom = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#enabled = 1
 
+" This next part lets me use K to get coc to show info on the expression under
+" the cursor, unless we're in a vim file or a help page, where K will search
+" for the expression in vim help pages.
+set keywordprg=:call\ CocActionAsync('doHover')
+augroup VimHelp
+  autocmd!
+  autocmd Filetype vim,help setlocal keywordprg=:help
+augroup END
+
 " tom's custom mapping
 let mapleader=" "
 inoremap jj <Esc>
@@ -109,7 +114,7 @@ inoremap <F1> <Esc>
 nnoremap <Leader>mm :set mouse=<CR>
 nnoremap <Leader>mn :set mouse=n<CR>
 
-nnoremap <Leader>mt :MundoToggle<CR>
+nnoremap <Leader>ut :MundoToggle<CR>
 
 " Symbol renaming.
 " nmap <Leader>rn <Plug>(coc-rename)
@@ -132,11 +137,11 @@ let g:coc_snippet_prev = '<c-k>'
 " nnoremap <Leader>a :Ag<CR>
 "
 " " Find files using Telescope command-line sugar.
-nnoremap <C-p> <cmd>Telescope find_files<cr>
-nnoremap <Leader>ff <cmd>Telescope find_files<cr>
-nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <Leader>fb <cmd>Telescope buffers<cr>
-nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
+" nnoremap <C-p> <cmd>Telescope find_files<cr>
+" nnoremap <Leader>ff <cmd>Telescope find_files<cr>
+" nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
+" nnoremap <Leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
 
 " Using lua functions
 nnoremap <Leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
