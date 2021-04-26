@@ -298,3 +298,6 @@ bind C-t send-prefix
 bind P paste-buffer
 #set-option -sa terminal-overrides ',xterm-256color:RGB'
 set -s default-terminal tmux-256color
+
+set-window-option -g mode-keys vi
+set-option -g history-limit 20000

@@ -39,7 +39,7 @@ require('lualine').setup{
   sections = {
     lualine_a = { {'mode', upper = false} },
     lualine_b = { {'branch', icon = ''} },
-    lualine_c = { {'filename', file_status = true} },
+    lualine_c = { {'filename', file_status = true, full_path = true} },
     lualine_x = { 'encoding', 'fileformat', 'filetype' },
     lualine_y = { 'progress' },
     lualine_z = { 'location'  },
@@ -67,7 +67,8 @@ require('telescope').setup{
   defaults = {
     file_ignore_patterns = {
       "node_modules/*",
-      "lib/*"
+      "lib/*",
+      "%package-lock.json"
     }
   }
 }
@@ -82,19 +83,26 @@ set timeoutlen=1000
 set ttimeoutlen=0
 set tabstop=2
 set shiftwidth=2
+" set tabstop=4
+" set shiftwidth=4
 set expandtab
 set smarttab
+set ignorecase
+set smartcase
 set mouse=n
 set number
 set relativenumber
 set autoindent
 set showmatch
+set iskeyword+=- " TODO: put this in a ftdetect/css.vim or something
+set indentkeys+=0. " TODO: put this in ftdetect for JS/TS
+
 let g:vim_markdown_folding_disabled = 1
 let python_highlight_all = 1
 let NERDTreeQuitOnOpen = 1
 let g:mundo_preview_bottom = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" let g:airline#extensions#tabline#enabled = 1
 
 " This next part lets me use K to get coc to show info on the expression under
 " the cursor, unless we're in a vim file or a help page, where K will search
@@ -114,16 +122,16 @@ inoremap <F1> <Esc>
 nnoremap <Leader>mm :set mouse=<CR>
 nnoremap <Leader>mn :set mouse=n<CR>
 
-nnoremap <Leader>ut :MundoToggle<CR>
+nnoremap <Leader>u :MundoToggle<CR>
 
 " Symbol renaming.
 " nmap <Leader>rn <Plug>(coc-rename)
 
 " Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+" imap <C-l> <Plug>(coc-snippets-expand)
 
 " Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+" vmap <C-j> <Plug>(coc-snippets-select)
 
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-j>'
@@ -158,6 +166,9 @@ nnoremap <Leader>ml :TestLast<CR>
 nnoremap <Leader>mg :TestVisit<CR>
 
 nnoremap <Leader>ve :e ~/.config/nvim/init.vim<CR>
+nnoremap <Leader>vz :e ~/.zshrc<CR>
+nnoremap <Leader>vi :e ~/.config/i3/config<CR>
+nnoremap <Leader>vh :e ~/.zsh_history<CR>
 nnoremap <Leader>vs :source ~/.config/nvim/init.vim<CR>
 nnoremap <Leader>t :NERDTreeToggle<CR>
 nnoremap <Leader>o :Vista!!<CR>
@@ -183,6 +194,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Search without special symbols
+nnoremap <Leader>/ /\V
+nnoremap <Leader>? ?\V
 
 " nnoremap <C-Tab>gt
 " nnoremap <C-S-Tab>gT
@@ -258,3 +273,31 @@ com! WP call WordProcessor()
 nnoremap <Leader>wp :WP<CR>
 
 let g:vista_default_executive = "coc"
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+nnoremap <Leader>p :Prettier<CR>
+
+" Map tab to completion hotkey except when entering whitespace.
+" from https://vim.fandom.com/wiki/Smart_mapping_for_tab_completion
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty string
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_period && !has_slash)
+    return "\<C-X>\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  else
+    return "\<C-X>\<C-O>"                         " plugin matching
+  endif
+endfunction
+
+inoremap <Tab> <C-r>=Smart_TabComplete()<CR>
