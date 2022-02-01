@@ -122,16 +122,26 @@ PATH=$PATH:/snap/bin
 # PATH=$PATH:$ANDROID_HOME/platform-tools
 # PATH=$PATH:/home/tom/Android/studio/bin
 alias o="xdg-open"
-alias vim="nvim"
 alias emacs="emacs -nw"
 alias lsh="ls -halt"
+alias lshh="ls -halt | head -n27"
 alias git="git --no-pager"
 alias i3config="vim ~/.config/i3/config"
 alias h="tail -n 500 ~/.zsh_history | nvim -"
 alias t3="tree -L 3"
+alias gde="git diff -- . ':(exclude)package-lock.json' ':(exclude)yarn.lock'"
+alias gr2="git rebase --interactive HEAD~2"
+alias gl="git log"
+alias sc="systemctl"
+alias rmr="rm -r"
+alias rmrf="rm -rf"
+alias svim="sudo nvim"
+alias v="nvim"
+alias vim="nvim"
 
 export GOPATH=/home/tom/src/go
-export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/elovate-service-account-creds.json
+export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/dev-trail-311217-6fe70fa11275.json
+# export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/elovate-service-account-creds.json
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/tom/software/google-cloud-sdk/path.zsh.inc' ]; then . '/home/tom/software/google-cloud-sdk/path.zsh.inc'; fi
