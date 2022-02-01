@@ -1,11 +1,12 @@
 call plug#begin()
+Plug 'numToStr/Comment.nvim'
 Plug 'godlygeek/tabular'
 Plug 'janko/vim-test'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
-Plug 'simnalamburt/vim-mundo'
-Plug 'tpope/vim-commentary'
+Plug 'mbbill/undotree'
+" Plug 'simnalamburt/vim-mundo'
 Plug 'psliwka/vim-smoothie'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -14,12 +15,12 @@ Plug 'sainnhe/sonokai'
 Plug 'liuchengxu/vista.vim'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'ap/vim-buftabline'
-Plug 'nacro90/numb.nvim'
+"Plug 'nacro90/numb.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'sheerun/vim-polyglot'
 call plug#end()
 
-syntax on
-filetype plugin indent on
+" filetype plugin indent on
 
 set termguicolors
 let g:sonokai_style = 'shusia'
@@ -28,7 +29,8 @@ let g:sonokai_disable_italic_comment = 0
 colorscheme sonokai
 
 lua << EOF
-require('numb').setup()
+-- require('numb').setup()
+require('Comment').setup()
 require('lualine').setup{
   options = {
     theme = 'gruvbox',
@@ -39,7 +41,7 @@ require('lualine').setup{
   sections = {
     lualine_a = { {'mode', upper = false} },
     lualine_b = { {'branch', icon = ''} },
-    lualine_c = { {'filename', file_status = true, full_path = true} },
+    lualine_c = { {'filename', file_status = true, path = 1} },
     lualine_x = { 'encoding', 'fileformat', 'filetype' },
     lualine_y = { 'progress' },
     lualine_z = { 'location'  },
@@ -57,25 +59,42 @@ require('lualine').setup{
 require('nvim-treesitter.configs').setup{
   ensure_installed = "maintained",
   highlight = {
-    enable = true
+    enable = true,
+    additional_vim_regex_highlighting = true
   },
   indent = {
-    enable = true
+    enable = false,
+    -- disable = { "typescript" }
   }
 }
 require('telescope').setup{
   defaults = {
     file_ignore_patterns = {
+      "assets/*",
       "node_modules/*",
       "lib/*",
-      "%package-lock.json"
+      "xcf/*",
+      "package-lock.json"
+    }
+  },
+  pickers = {
+    live_grep = {
+      file_ignore_patterns = {
+        "assets/*",
+        "node_modules/*",
+        "lib/*",
+        "xcf/*",
+        "package-lock.json"
+      }
     }
   }
 }
 EOF
 
+" syntax on
 set hidden
-set formatoptions=jcroql
+"set formatoptions=jcroql
+set formatoptions=jcql
 set undofile
 set undolevels=2000
 set nohlsearch
@@ -92,17 +111,16 @@ set smartcase
 set mouse=n
 set number
 set relativenumber
-set autoindent
+" set autoindent
 set showmatch
 set iskeyword+=- " TODO: put this in a ftdetect/css.vim or something
 set indentkeys+=0. " TODO: put this in ftdetect for JS/TS
+set inccommand=nosplit
 
 let g:vim_markdown_folding_disabled = 1
 let python_highlight_all = 1
 let NERDTreeQuitOnOpen = 1
-let g:mundo_preview_bottom = 1
-" let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-" let g:airline#extensions#tabline#enabled = 1
+" let g:mundo_preview_bottom = 1
 
 " This next part lets me use K to get coc to show info on the expression under
 " the cursor, unless we're in a vim file or a help page, where K will search
@@ -122,7 +140,7 @@ inoremap <F1> <Esc>
 nnoremap <Leader>mm :set mouse=<CR>
 nnoremap <Leader>mn :set mouse=n<CR>
 
-nnoremap <Leader>u :MundoToggle<CR>
+nnoremap <Leader>u :UndotreeToggle<CR>
 
 " Symbol renaming.
 " nmap <Leader>rn <Plug>(coc-rename)
@@ -133,10 +151,10 @@ nnoremap <Leader>u :MundoToggle<CR>
 " Use <C-j> for select text for visual placeholder of snippet.
 " vmap <C-j> <Plug>(coc-snippets-select)
 
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+" Use <C-j> for jump to next placeholder.
 let g:coc_snippet_next = '<c-j>'
 
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+" Use <C-k> for jump to previous placeholder.
 let g:coc_snippet_prev = '<c-k>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
@@ -145,17 +163,19 @@ let g:coc_snippet_prev = '<c-k>'
 " nnoremap <Leader>a :Ag<CR>
 "
 " " Find files using Telescope command-line sugar.
-" nnoremap <C-p> <cmd>Telescope find_files<cr>
-" nnoremap <Leader>ff <cmd>Telescope find_files<cr>
-" nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
-" nnoremap <Leader>fb <cmd>Telescope buffers<cr>
-" nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
+" nnoremap <C-p> <cmd>Telescope find_files<CR>
+" nnoremap <Leader>ff <cmd>Telescope find_files<CR>
+" nnoremap <Leader>fg <cmd>Telescope live_grep<CR>
+" nnoremap <Leader>fb <cmd>Telescope buffers<CR>
+" nnoremap <Leader>fh <cmd>Telescope help_tags<CR>
 
 " Using lua functions
-nnoremap <Leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <Leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <Leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <Leader>ff <cmd>lua require('telescope.builtin').find_files()<CR>
+nnoremap <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<CR>
+nnoremap <Leader>fb <cmd>lua require('telescope.builtin').buffers()<CR>
+" nnoremap <Leader>fh <cmd>lua require('telescope.builtin').help_tags()<CR>
+nnoremap <Leader>fh <cmd>lua require('telescope.builtin').find_files({ hidden=true })<CR>
+" TODO: figure out how to toggle ignoring files in .gitignore
 
 nnoremap <Leader>cr :CocRestart<CR>
 
@@ -165,11 +185,14 @@ nnoremap <Leader>ms :TestSuite<CR>
 nnoremap <Leader>ml :TestLast<CR>
 nnoremap <Leader>mg :TestVisit<CR>
 
+nnoremap <Leader>n :set relativenumber!<CR>
+
 nnoremap <Leader>ve :e ~/.config/nvim/init.vim<CR>
 nnoremap <Leader>vz :e ~/.zshrc<CR>
 nnoremap <Leader>vi :e ~/.config/i3/config<CR>
 nnoremap <Leader>vh :e ~/.zsh_history<CR>
 nnoremap <Leader>vs :source ~/.config/nvim/init.vim<CR>
+
 nnoremap <Leader>t :NERDTreeToggle<CR>
 nnoremap <Leader>o :Vista!!<CR>
 nnoremap <Leader>hl :set hlsearch!<CR>
@@ -180,15 +203,22 @@ nnoremap <Leader>H :tabprev<CR>
 nnoremap <Leader>L :tabnext<CR>
 nnoremap L :bnext<CR>
 nnoremap H :bprev<CR>
-nnoremap <Leader>qq :bp <BAR> bd #<CR>
+nnoremap <Leader>q :bd<CR>
+nnoremap <Leader>wq :w<CR> :bd<CR>
 
 nnoremap <Leader>lr :!pdflatex %<CR>
 
 nnoremap <Leader>sb vi}
 nnoremap <Leader>sp vi)
 
+" Quickly restart CoC
+nnoremap <Leader>cr :CocRestart<CR>
+
+" Scrolling line by line is slow
 nnoremap <C-e> 10<C-e>
 nnoremap <C-y> 10<C-y>
+vnoremap <C-e> 10<C-e>
+vnoremap <C-y> 10<C-y>
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -199,8 +229,7 @@ nnoremap <C-l> <C-w>l
 nnoremap <Leader>/ /\V
 nnoremap <Leader>? ?\V
 
-" nnoremap <C-Tab>gt
-" nnoremap <C-S-Tab>gT
+nnoremap Q :echo "I don't like ex mode."<CR>
 
 " commands related to nvim terminal
 autocmd BufEnter term://* startinsert
@@ -256,8 +285,8 @@ au BufNewFile,BufRead *.boot set filetype=clojure
 " "word processor" mode stuff
 func! WordProcessor()
   " movement changes
-  map j gj
-  map k gk
+  " map j gj
+  " map k gk
   " formatting text
   setlocal formatoptions=1
   "setlocal noexpandtab
@@ -279,25 +308,61 @@ nnoremap <Leader>p :Prettier<CR>
 
 " Map tab to completion hotkey except when entering whitespace.
 " from https://vim.fandom.com/wiki/Smart_mapping_for_tab_completion
-function! Smart_TabComplete()
-  let line = getline('.')                         " current line
+" function! Smart_TabComplete()
+"   let line = getline('.')                         " current line
 
-  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
-                                                  " line to one character right
-                                                  " of the cursor
-  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-  if (strlen(substr)==0)                          " nothing to match on empty string
-    return "\<tab>"
-  endif
-  let has_period = match(substr, '\.') != -1      " position of period, if any
-  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-  if (!has_period && !has_slash)
-    return "\<C-X>\<C-P>"                         " existing text matching
-  elseif ( has_slash )
-    return "\<C-X>\<C-F>"                         " file matching
-  else
-    return "\<C-X>\<C-O>"                         " plugin matching
-  endif
+"   let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+"                                                   " line to one character right
+"                                                   " of the cursor
+"   let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+"   if (strlen(substr)==0)                          " nothing to match on empty string
+"     return "\<tab>"
+"   endif
+"   let has_period = match(substr, '\.') != -1      " position of period, if any
+"   let has_slash = match(substr, '\/') != -1       " position of slash, if any
+"   if (!has_period && !has_slash)
+"     return "\<C-X>\<C-P>"                         " existing text matching
+"   elseif ( has_slash )
+"     return "\<C-X>\<C-F>"                         " file matching
+"   else
+"     return "\<C-X>\<C-O>"                         " plugin matching
+"   endif
+" endfunction
+
+" inoremap <Tab> <C-r>=Smart_TabComplete()<CR>
+
+command! -nargs=0 FiletypeReact :set filetype=typescriptreact
+
+" from https://jamesdixon.dev/posts/a-minimal-vimrc/
+augroup general
+    autocmd!
+    "keep equal proportions when windows resized
+    autocmd VimResized * wincmd =
+    "save cursor position in a file
+    " autocmd BufReadPost * if line("'\"") > 1 && line("'\"")
+    "             \ <= line("$") | exe "normal! g'\"" | endif
+augroup END
+
+" mappings for diff mode
+if &diff
+    map <Leader>1 :diffget LOCAL<CR>
+    map <Leader>2 :diffget BASE<CR>
+    map <Leader>3 :diffget REMOTE<CR>
+endif
+
+let g:coc_disable_transparent_cursor = 1
+" let g:coc_enable_locationlist = 0
+" autocmd User CocLocationsChange call setloclist(0, g:coc_jump_locations) | lwindow
+
+" https://github.com/coc-extensions/coc-omnisharp/issues/53#issuecomment-800489995
+" Toggle duplicate LS sources
+function Disable_ls_duplicates()
+" :call CocAction('toggleSource', 'cs-1')
+:call CocAction('toggleSource', 'cs-2')
+:call CocAction('toggleSource', 'cs-3')
+:call CocAction('toggleSource', 'cs-4')
 endfunction
 
-inoremap <Tab> <C-r>=Smart_TabComplete()<CR>
+" Map the function call
+nnoremap <Leader>dld :call Disable_ls_duplicates()
+

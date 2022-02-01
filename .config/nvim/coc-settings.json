@@ -4,5 +4,12 @@
     "tsserver.npm": "/usr/bin/npm",
     "tsserver.log": "verbose",
     "tsserver.trace.server": "verbose",
-    "tsserver.reportStyleChecksAsWarnings": false
+    "tsserver.reportStyleChecksAsWarnings": false,
+    "languageserver": {
+      "godot": {
+        "host": "127.0.0.1",
+        "filetypes": ["gd", "gdscript", "gdscript3"],
+        "port": 6008
+      }
+    }
 }
