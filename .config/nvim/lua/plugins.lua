@@ -21,9 +21,10 @@ require("packer").startup(function()
   use "nvim-lua/popup.nvim" -- Library for other plugins
   use "nvim-telescope/telescope.nvim" -- Finder
   use "nvim-treesitter/nvim-treesitter" -- Do things with ASTs
-  use "psliwka/vim-smoothie" -- Smooth scrolling
-	use "ray-x/lsp_signature.nvim" -- Show function signatures
+  use "karb94/neoscroll.nvim" -- Smooth scrolling
+  use "ray-x/lsp_signature.nvim" -- Show function signatures
   use "sainnhe/sonokai" -- Colorscheme
+  use "simrat39/symbols-outline.nvim" -- Code outline
   use "tpope/vim-surround" -- Manipulate surrounding characters
 
 	use {
@@ -74,10 +75,25 @@ require("nvim-treesitter.configs").setup({
     additional_vim_regex_highlighting = false
   },
   indent = {
-    enable = true,
+    enable = false,
     -- disable = { "typescript" }
   }
 })
+-- jinja2 treesitter grammar:
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.jinja2 = {
+  install_info = {
+    url = "https://github.com/dbt-labs/tree-sitter-jinja2", -- local path or git repo
+    files = {"src/parser.c"},
+    -- optional entries:
+    branch = "main", -- default branch in case of git repo if different from master
+    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+  filetype = "zu", -- if filetype does not match the parser name
+}
+local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+ft_to_parser.html = "jinja2" -- the someft filetype will use the python parser and queries.
 
 local telescope = require("telescope")
 telescope.setup({
@@ -145,14 +161,15 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
-		{ name = "buffer" }
+    { name = "buffer" }
   },
 })
 
 require("lsp_signature").setup({
 	-- bind = true
 })
-
 require("numb").setup()
-
--- require("init-lsp")
+-- require("neoscroll").setup({
+--     performance_mode = false,
+--     stop_eof = false
+-- })

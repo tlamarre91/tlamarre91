@@ -56,5 +56,5 @@ map("n", "<Leader>fh", "<CMD>Telescope find_files hidden=true<CR>")
 -- other plugins
 map("n", "<Leader>u", "<CMD>UndotreeToggle<CR>")
 map("n", "<Leader>t", "<CMD>NvimTreeToggle<CR>")
-map("n", "<Leader>o", "<CMD>Vista!!<CR>")
+map("n", "<Leader>o", "<CMD>SymbolsOutline<CR>")
 map("n", "<Leader>d", "<CMD>TroubleToggle<CR>")
