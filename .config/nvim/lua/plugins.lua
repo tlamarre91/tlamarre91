@@ -14,7 +14,7 @@ require("packer").startup(function()
   use "lambdalisue/suda.vim" -- Write as root
   -- use "liuchengxu/vista.vim" -- Code outline
   use "mbbill/undotree" -- Navigate undo history
-	use "nacro90/numb.nvim" -- Peek when navigating by line number
+  use "nacro90/numb.nvim" -- Peek when navigating by line number
   use "neovim/nvim-lspconfig"
   use "numToStr/Comment.nvim" -- Manage comments
   use "nvim-lua/plenary.nvim" -- Library for other plugins
@@ -27,15 +27,15 @@ require("packer").startup(function()
   use "simrat39/symbols-outline.nvim" -- Code outline
   use "tpope/vim-surround" -- Manipulate surrounding characters
 
-	use {
-		"folke/trouble.nvim", -- Diagnostics
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function() 
-			require("trouble").setup({
-				mode = "document_diagnostics"
-			})
-		end
-	}
+  use {
+    "folke/trouble.nvim", -- Diagnostics
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function() 
+      require("trouble").setup({
+        mode = "document_diagnostics"
+      })
+    end
+  }
 
   -- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 end)
@@ -75,7 +75,7 @@ require("nvim-treesitter.configs").setup({
     additional_vim_regex_highlighting = false
   },
   indent = {
-    enable = false,
+    enable = true,
     -- disable = { "typescript" }
   }
 })
