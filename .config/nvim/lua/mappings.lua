@@ -19,6 +19,7 @@ map("n", "<Leader>h", "<CMD>WhichKey ''<CR>")
 -- shortcuts
 map("i", "jj", "<Esc>")
 map("n", "<Leader>q", "<CMD>bdelete<CR>")
+-- map("n", "<Leader>q", "<CMD>bn | bdelete #<CR>")
 map("n", "<Leader>wq", "<CMD>w<CR><CMD>bd<CR>")
 -- map("n", "<Leader>lr", "<CMD>!pdflatex %<CR>")
 
@@ -51,10 +52,13 @@ map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-l>", "<C-w>l")
 
+-- let rtp = vim.opt.runtimepath._value -- TODO: use this for <Leader>fc
+
 -- telescope
 map("n", "<Leader>ff", "<CMD>Telescope find_files<CR>")
 map("n", "<Leader>fg", "<CMD>Telescope live_grep<CR>")
 map("n", "<Leader>fb", "<CMD>Telescope buffers<CR>")
+-- map("n", "<Leader>fc", "<CMD>Telescope find_files search_dirs={'~/.config/nvim'}<CR>")
 map("n", "<Leader>fc", "<CMD>Telescope find_files search_dirs={'~/.config/nvim'}<CR>")
 map("n", "<Leader>fh", "<CMD>Telescope find_files hidden=true<CR>")
 map("n", "<Leader>fo", "<CMD>Telescope oldfiles<CR>")
@@ -64,3 +68,4 @@ map("n", "<Leader>u", "<CMD>UndotreeToggle<CR>")
 map("n", "<Leader>t", "<CMD>NvimTreeToggle<CR>")
 map("n", "<Leader>o", "<CMD>SymbolsOutline<CR>")
 map("n", "<Leader>d", "<CMD>TroubleToggle<CR>")
+map("n", "<Leader>ss", "<CMD>echo nvim_treesitter#statusline()<CR>")

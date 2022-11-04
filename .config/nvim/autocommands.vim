@@ -13,3 +13,9 @@ augroup VimHelp
   autocmd!
   autocmd Filetype vim,help setlocal keywordprg=:help
 augroup END
+
+" Exclude quickfix from buffer list
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END

@@ -21,6 +21,7 @@ require("packer").startup(function()
   use "nvim-lua/popup.nvim" -- Library for other plugins
   use "nvim-telescope/telescope.nvim" -- Finder
   use "nvim-treesitter/nvim-treesitter" -- Do things with ASTs
+  use "preservim/tagbar" -- Status bar showing current tags
   use "karb94/neoscroll.nvim" -- Smooth scrolling
   use "ray-x/lsp_signature.nvim" -- Show function signatures
   use "sainnhe/sonokai" -- Colorscheme
@@ -98,6 +99,7 @@ ft_to_parser.html = "jinja2" -- the someft filetype will use the python parser a
 local telescope = require("telescope")
 telescope.setup({
   defaults = {
+    path_display={"truncate"},
     file_ignore_patterns = {
       "assets/*",
       "node_modules/*",
