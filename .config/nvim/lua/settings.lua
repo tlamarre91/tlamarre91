@@ -377,9 +377,6 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- Turn on lsp status information
-require('fidget').setup()
-
 -- Example custom configuration for lua
 --
 -- Make runtime files discoverable to the server
@@ -412,6 +409,11 @@ require('lspconfig').lua_ls.setup {
 }
 
 require("nvim-tree").setup()
+
+-- GUI settings
+vim.opt.guifont = "Cascadia Mono:h10"
+vim.g.neovide_cursor_trail_size = 0.5
+vim.g.neovide_cursor_animation_length = 0.05
 
 require "mapping"
 
