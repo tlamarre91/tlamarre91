@@ -377,9 +377,6 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- Turn on lsp status information
-require('fidget').setup()
-
 -- Example custom configuration for lua
 --
 -- Make runtime files discoverable to the server
