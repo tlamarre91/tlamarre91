@@ -225,6 +225,68 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
+-- [[ Setting options ]]
+-- See `:help vim.o`
+
+-- Set highlight on search
+vim.o.hlsearch = false
+
+-- Make line numbers default
+vim.wo.number = true
+
+-- Enable mouse mode
+vim.o.mouse = 'a'
+
+-- Sync clipboard between OS and Neovim.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+-- vim.o.clipboard = 'unnamedplus'
+
+-- Enable break indent
+vim.o.breakindent = true
+
+-- Save undo history
+vim.o.undofile = true
+
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Keep signcolumn on by default
+vim.wo.signcolumn = 'yes'
+
+-- Decrease update time
+vim.o.updatetime = 250
+vim.o.timeout = true
+vim.o.timeoutlen = 300
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
+
+-- NOTE: You should make sure your terminal supports this
+vim.o.termguicolors = true
+
+-- [[ Basic Keymaps ]]
+
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -237,9 +299,6 @@ require('telescope').setup {
     },
   },
 }
-
--- Enable Comment.nvim
-require('Comment').setup()
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -265,8 +324,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'rust', 'vim' },
-  ignore_install = { 'help' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -355,11 +413,10 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', vim.lsp.buf.rename, 'rename thing')
-  nmap('g*', require('telescope.builtin').lsp_references, 'get references')
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>go', require('telescope.builtin').lsp_document_symbols, 'get outline')
+  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
@@ -388,13 +445,7 @@ end
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  pyright = {
-    python = {
-      analysis = {
-        diagnosticMode = "openFilesOnly"
-      }
-    }
-  },
+  -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
 

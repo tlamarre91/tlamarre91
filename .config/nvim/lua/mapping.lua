@@ -7,7 +7,6 @@ vim.keymap.set('n', '<Leader>sw', '<CMD>setlocal wrap!<CR>')
 -- switching buffers
 vim.keymap.set('n', '<Leader>q', '<CMD>bdelete<CR>')
 vim.keymap.set('n', '<Leader>wq', '<CMD>w<CR><CMD>bd<CR>')
-vim.keymap.set('n', '<Leader>aq', '<CMD>bufdo bdelete<CR>')
 vim.keymap.set('n', 'L', '<CMD>bnext<CR>')
 vim.keymap.set('n', 'H', '<CMD>bprev<CR>')
 vim.keymap.set('n', '<C-h>', '<C-w>h')
@@ -16,7 +15,7 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 
 -- diagnostics
--- vim.keymap.set('n', '<Leader>d', '<CMD>lua vim.diagnostic.setloclist()<CR>', { desc = 'diag to quickfix' })
+vim.keymap.set('n', '<Leader>d', '<CMD>lua vim.diagnostic.setloclist()<CR>', { desc = 'diag to quickfix' })
 vim.keymap.set('n', 'g,', '<CMD>lua vim.diagnostic.goto_prev()<CR>', { desc = 'goto prev diag' })
 vim.keymap.set('n', 'g.', '<CMD>lua vim.diagnostic.goto_next()<CR>', { desc = 'goto next diag' })
 
