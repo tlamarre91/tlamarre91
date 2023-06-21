@@ -70,8 +70,12 @@ DISABLE_AUTO_UPDATE="false"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git yarn)
+# plugins=(git yarn)
+plugins=(git npm aws)
 
+# Completion
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit -i
 
 # User configuration
 
@@ -113,6 +117,7 @@ PATH=$PATH:/home/tom/.yarn/bin
 PATH=$PATH:/home/tom/.config/composer/vendor/bin
 PATH=$PATH:/home/tom/src/go/bin
 PATH=$PATH:/snap/bin
+PATH=$PATH:/home/tom/.local/npm-global/bin
 
 # export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
 # export ANDROID_HOME=/home/tom/Android/Sdk
@@ -138,9 +143,11 @@ alias rmrf="rm -rf"
 alias svim="sudo nvim"
 alias v="nvim"
 alias vim="nvim"
+alias t="tmux"
 
+export AWS_PAGER=""
 export GOPATH=/home/tom/src/go
-export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/dev-trail-311217-6fe70fa11275.json
+# export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/dev-trail-311217-6fe70fa11275.json
 # export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/elovate-service-account-creds.json
 
 # The next line updates PATH for the Google Cloud SDK.
