@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+rsync -avu --delete ~/.config/{nvim,i3} ~/src/tlamarre91/.config
