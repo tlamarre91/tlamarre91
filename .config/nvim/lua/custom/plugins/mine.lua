@@ -1,5 +1,4 @@
 return {
-  'kyazdani42/nvim-tree.lua',
   'ap/vim-buftabline',
   'mbbill/undotree',
   {
@@ -11,5 +10,14 @@ return {
         -- Configuration here, or leave empty to use defaults
       })
     end
+  },
+  {
+    -- LSP Configuration & Plugins
+    'nvim-tree/nvim-tree.lua',
+    dependencies = {
+      -- Automatically install LSPs to stdpath for neovim
+      { 'nvim-tree/nvim-web-devicons' },
+    },
+    opts = {}
   }
 }

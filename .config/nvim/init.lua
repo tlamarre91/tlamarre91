@@ -474,6 +474,7 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+  preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert {
     -- ['<C-n>'] = cmp.mapping.select_next_item(),
     -- ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -517,7 +518,7 @@ vim.keymap.set('n', '<Leader>sh', '<CMD>setlocal hlsearch!<CR>')
 vim.keymap.set('n', '<Leader>sw', '<CMD>setlocal wrap!<CR>')
 
 -- switching buffers
-vim.keymap.set('n', '<Leader>q', '<CMD>bdelete<CR>')
+vim.keymap.set('n', '<Leader>q', '<CMD>bdelete | bnext<CR>')
 vim.keymap.set('n', '<Leader>wq', '<CMD>w<CR><CMD>bd<CR>')
 vim.keymap.set('n', 'L', '<CMD>bnext<CR>')
 vim.keymap.set('n', 'H', '<CMD>bprev<CR>')
@@ -570,12 +571,13 @@ vim.keymap.set('n', '<C-e>', '5<C-e>')
 vim.keymap.set('n', '<C-y>', '5<C-y>')
 
 -- other plugins
-vim.keymap.set('n', '<Leader>u', '<CMD>UndotreeToggle<CR>')
-vim.keymap.set('n', '<Leader>t', '<CMD>NvimTreeToggle<CR>')
--- vim.keymap.set('n', '<Leader>o', '<CMD>SymbolsOutline<CR>')
--- vim.keymap.set('n', '<Leader>d', '<CMD>TroubleToggle<CR>')
+vim.keymap.set('n', '<Leader>u', function() vim.cmd('UndotreeToggle') end)
+vim.keymap.set('n', '<Leader>t', function() vim.cmd('NvimTreeToggle') end)
 
-vim.o.tabstop = 4
+vim.o.tabstop = 2
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
