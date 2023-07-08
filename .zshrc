@@ -144,6 +144,7 @@ alias svim="sudo nvim"
 alias v="nvim"
 alias vim="nvim"
 alias t="tmux"
+alias kubectl="minikube kubectl --"
 
 export AWS_PAGER=""
 export GOPATH=/home/tom/src/go

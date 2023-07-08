@@ -84,7 +84,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      -- { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -422,7 +422,7 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+  gopls = {},
   pyright = {},
   -- rust_analyzer = {},
   tsserver = {},
@@ -527,9 +527,10 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 
 -- diagnostics
-vim.keymap.set('n', '<Leader>d', '<CMD>lua vim.diagnostic.setloclist()<CR>', { desc = 'diag to quickfix' })
-vim.keymap.set('n', 'g,', '<CMD>lua vim.diagnostic.goto_prev()<CR>', { desc = 'goto prev diag' })
-vim.keymap.set('n', 'g.', '<CMD>lua vim.diagnostic.goto_next()<CR>', { desc = 'goto next diag' })
+vim.keymap.set('n', '<Leader>d',vim.diagnostic.setloclist, { desc = 'diag to quickfix' })
+vim.keymap.set('n', '<Leader>k',vim.diagnostic.open_float, { desc = 'diag to quickfix' })
+vim.keymap.set('n', 'g,',vim.diagnostic.goto_prev, { desc = 'goto prev diag' })
+vim.keymap.set('n', 'g.',vim.diagnostic.goto_next, { desc = 'goto next diag' })
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>/', function()
@@ -574,6 +575,7 @@ vim.keymap.set('n', '<Leader>t', '<CMD>NvimTreeToggle<CR>')
 -- vim.keymap.set('n', '<Leader>o', '<CMD>SymbolsOutline<CR>')
 -- vim.keymap.set('n', '<Leader>d', '<CMD>TroubleToggle<CR>')
 
+vim.o.tabstop = 4
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
