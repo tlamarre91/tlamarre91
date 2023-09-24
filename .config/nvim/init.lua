@@ -84,7 +84,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      -- { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -301,7 +301,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'html', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -422,8 +422,14 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   -- clangd = {},
-  gopls = {},
-  pyright = {},
+  -- gopls = {},
+  pyright = {
+    python = {
+      analysis = {
+        diagnosticMode = "openFilesOnly"
+      }
+    }
+  },
   -- rust_analyzer = {},
   tsserver = {},
   svelte = {},
@@ -474,7 +480,6 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
-  preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert {
     -- ['<C-n>'] = cmp.mapping.select_next_item(),
     -- ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -518,7 +523,7 @@ vim.keymap.set('n', '<Leader>sh', '<CMD>setlocal hlsearch!<CR>')
 vim.keymap.set('n', '<Leader>sw', '<CMD>setlocal wrap!<CR>')
 
 -- switching buffers
-vim.keymap.set('n', '<Leader>q', '<CMD>bdelete | bnext<CR>')
+vim.keymap.set('n', '<Leader>q', '<CMD>bdelete<CR>')
 vim.keymap.set('n', '<Leader>wq', '<CMD>w<CR><CMD>bd<CR>')
 vim.keymap.set('n', 'L', '<CMD>bnext<CR>')
 vim.keymap.set('n', 'H', '<CMD>bprev<CR>')
@@ -528,10 +533,9 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 
 -- diagnostics
-vim.keymap.set('n', '<Leader>d',vim.diagnostic.setloclist, { desc = 'diag to quickfix' })
-vim.keymap.set('n', '<Leader>k',vim.diagnostic.open_float, { desc = 'diag to quickfix' })
-vim.keymap.set('n', 'g,',vim.diagnostic.goto_prev, { desc = 'goto prev diag' })
-vim.keymap.set('n', 'g.',vim.diagnostic.goto_next, { desc = 'goto next diag' })
+vim.keymap.set('n', '<Leader>d', '<CMD>lua vim.diagnostic.setloclist()<CR>', { desc = 'diag to quickfix' })
+vim.keymap.set('n', 'g,', '<CMD>lua vim.diagnostic.goto_prev()<CR>', { desc = 'goto prev diag' })
+vim.keymap.set('n', 'g.', '<CMD>lua vim.diagnostic.goto_next()<CR>', { desc = 'goto next diag' })
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>/', function()
@@ -558,12 +562,13 @@ vim.keymap.set('n', '<leader>fc',
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'find diag' })
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'find files' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'find live grep' })
+vim.keymap.set('n', '<leader>fh', function () require('telescope.builtin').find_files { hidden = true } end, { desc = 'find hidden files' })
 vim.keymap.set('n', '<leader>fG',
   function()
     require('telescope.builtin').live_grep({ grep_open_files = true })
   end,
   { desc = 'find live grep' })
-vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'find help' })
+vim.keymap.set('n', '<leader>fH', require('telescope.builtin').help_tags, { desc = 'find help' })
 vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = 'find old (recent)' })
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'find word' })
 
@@ -571,13 +576,17 @@ vim.keymap.set('n', '<C-e>', '5<C-e>')
 vim.keymap.set('n', '<C-y>', '5<C-y>')
 
 -- other plugins
-vim.keymap.set('n', '<Leader>u', function() vim.cmd('UndotreeToggle') end)
-vim.keymap.set('n', '<Leader>t', function() vim.cmd('NvimTreeToggle') end)
+vim.keymap.set('n', '<Leader>u', '<CMD>UndotreeToggle<CR>')
+vim.keymap.set('n', '<Leader>t', '<CMD>NvimTreeToggle<CR>')
+-- vim.keymap.set('n', '<Leader>o', '<CMD>SymbolsOutline<CR>')
+-- vim.keymap.set('n', '<Leader>d', '<CMD>TroubleToggle<CR>')
 
-vim.o.tabstop = 2
+-- GUI settings
+vim.opt.guifont = "Cascadia Mono:h10"
+vim.g.neovide_cursor_trail_size = 0.5
+vim.g.neovide_cursor_animation_length = 0.05
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.opt.scrolloff = 5
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
