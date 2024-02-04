@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -23,14 +23,13 @@ ZSH_THEME="bira"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="false"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -45,8 +44,9 @@ DISABLE_AUTO_UPDATE="false"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
-# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -70,12 +70,9 @@ DISABLE_AUTO_UPDATE="false"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(git yarn)
-plugins=(git npm aws)
+plugins=(git)
 
-# Completion
-fpath=(~/.zsh/completion $fpath)
-autoload -Uz compinit && compinit -i
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -94,65 +91,14 @@ autoload -Uz compinit && compinit -i
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+export PATH=$PATH:~/bin
 
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir $ZSH_CACHE_DIR
-fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source $ZSH/oh-my-zsh.sh
-export EDITOR=nvim
-export VISUAL=nvim
-# TERM=xterm-256color-italic
-PATH=$PATH:/home/tom/bin
-PATH=$PATH:/home/tom/.yarn/bin
-PATH=$PATH:/home/tom/.config/composer/vendor/bin
-PATH=$PATH:/home/tom/src/go/bin
-PATH=$PATH:/snap/bin
-PATH=$PATH:/home/tom/.local/npm-global/bin
+export AWS_DEFAULT_PROFILE=SgfMeetupApiAccess-391849688676
+export AWS_PROFILE=SgfMeetupApiAccess-391849688676
 
-# export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
-# export ANDROID_HOME=/home/tom/Android/Sdk
-# PATH=$PATH:$ANDROID_HOME/emulator
-# PATH=$PATH:$ANDROID_HOME/tools
-# PATH=$PATH:$ANDROID_HOME/tools/bin
-# PATH=$PATH:$ANDROID_HOME/platform-tools
-# PATH=$PATH:/home/tom/Android/studio/bin
-alias o="xdg-open"
-alias emacs="emacs -nw"
-alias lsh="ls -halt"
-alias lshh="ls -halt | head -n27"
-alias git="git --no-pager"
-alias i3config="vim ~/.config/i3/config"
-alias h="tail -n 500 ~/.zsh_history | nvim -"
-alias t3="tree -L 3"
-alias gde="git diff -- . ':(exclude)package-lock.json' ':(exclude)yarn.lock'"
-alias gr2="git rebase --interactive HEAD~2"
-alias gl="git log"
-alias sc="systemctl"
-alias rmr="rm -r"
-alias rmrf="rm -rf"
-alias svim="sudo nvim"
-alias v="nvim"
-alias vim="nvim"
-alias t="tmux"
-alias kubectl="minikube kubectl --"
-
-export AWS_PAGER=""
-export GOPATH=/home/tom/src/go
-# export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/dev-trail-311217-6fe70fa11275.json
-# export GOOGLE_APPLICATION_CREDENTIALS=~/Documents/elovate-service-account-creds.json
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/tom/software/google-cloud-sdk/path.zsh.inc' ]; then . '/home/tom/software/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/tom/software/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/tom/software/google-cloud-sdk/completion.zsh.inc'; fi
+alias lsh="ls -hal"
+alias discord="flatpak run com.discordapp.Discord"
