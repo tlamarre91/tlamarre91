@@ -27,7 +27,7 @@ font xft:URWGothic-Book 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminal
+bindsym $mod+Return exec terminal -e tmux
 
 # kill focused window
 bindsym $mod+Shift+q kill
