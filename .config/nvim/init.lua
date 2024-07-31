@@ -68,6 +68,7 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
+  --
 
   -- Git related plugins
   'tpope/vim-fugitive',
@@ -272,6 +273,14 @@ require('lazy').setup({
         })
     end
   },
+
+  {
+    'ziontee113/color-picker.nvim',
+    config = function()
+      require('color-picker').setup({
+      })
+    end
+  }
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -558,21 +567,29 @@ local on_attach = function(_, bufnr)
 end
 
 -- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+require('which-key').add {
+  { "<leader>c", group = "[C]ode" },
+  { "<leader>c_", hidden = true },
+  { "<leader>d", group = "[D]ocument" },
+  { "<leader>d_", hidden = true },
+  { "<leader>g", group = "[G]it" },
+  { "<leader>g_", hidden = true },
+  { "<leader>h", group = "Git [H]unk" },
+  { "<leader>h_", hidden = true },
+  { "<leader>r", group = "[R]ename" },
+  { "<leader>r_", hidden = true },
+  { "<leader>s", group = "[S]earch" },
+  { "<leader>s_", hidden = true },
+  { "<leader>t", group = "[T]oggle" },
+  { "<leader>t_", hidden = true },
+  { "<leader>w", group = "[W]orkspace" },
+  { "<leader>w_", hidden = true },
 }
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
-require('which-key').register({
-  ['<leader>'] = { name = 'VISUAL <leader>' },
-  ['<leader>h'] = { 'Git [H]unk' },
+require('which-key').add({
+  { "<leader>", group = "VISUAL <leader>", mode = "v" },
+  { "<leader>h", desc = "Git [H]unk", mode = "v" },
 }, { mode = 'v' })
 
 -- mason-lspconfig requires that these setup functions are called in this order
@@ -604,6 +621,13 @@ local servers = {
       -- diagnostics = { disable = { 'missing-fields' } },
     },
   },
+  -- pylsp = {
+  --   plugins = {
+  --     rope_completion = {
+  --       enabled = true
+  --     }
+  --   }
+  -- }
 }
 
 -- Setup neovim lua configuration
@@ -686,6 +710,8 @@ cmp.setup {
 vim.keymap.set('n', 'L', function () vim.cmd('bnext') end)
 vim.keymap.set('n', 'H', function () vim.cmd('bprev') end)
 vim.keymap.set('n', '<Leader>q', function () vim.cmd('bdelete') end)
+vim.keymap.set('n', '<Leader>ci', function () vim.cmd('PickColorInsert') end)
+vim.keymap.set('n', '<Leader>cp', function () vim.cmd('PickColor') end)
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
