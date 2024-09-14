@@ -31,6 +31,7 @@ output * bg /home/tom/Pictures/wallpapers/scotland-zach.png fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 output eDP-1 resolution 2160x1350 scale 1.25
+# output eDP-1 resolution 2160x1350 scale 1.00
 
 ### Idle configuration
 #
@@ -187,16 +188,16 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 30px
-    bindsym $down resize grow height 30px
-    bindsym $up resize shrink height 30px
-    bindsym $right resize grow width 30px
+    bindsym $left resize shrink width 50px
+    bindsym $down resize grow height 50px
+    bindsym $up resize shrink height 50px
+    bindsym $right resize grow width 50px
 
     # Ditto, with arrow keys
-    bindsym Left resize shrink width 30px
-    bindsym Down resize grow height 30px
-    bindsym Up resize shrink height 30px
-    bindsym Right resize grow width 30px
+    bindsym Left resize shrink width 50px
+    bindsym Down resize grow height 50px
+    bindsym Up resize shrink height 50px
+    bindsym Right resize grow width 50px
 
     # Return to default mode
     bindsym Return mode "default"
@@ -225,11 +226,11 @@ bar {
     position bottom
     mode hide
 
-    font sans 12px
+    font mono 12px
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+    status_command while bash ~/.config/sway/status.sh; do sleep 5; done
 
     colors {
         # statusline #ffffff

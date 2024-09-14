@@ -68,7 +68,7 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-  --
+  'mbbill/undotree',
 
   -- Git related plugins
   'tpope/vim-fugitive',
@@ -712,6 +712,7 @@ vim.keymap.set('n', 'H', function () vim.cmd('bprev') end)
 vim.keymap.set('n', '<Leader>q', function () vim.cmd('bdelete') end)
 vim.keymap.set('n', '<Leader>ci', function () vim.cmd('PickColorInsert') end)
 vim.keymap.set('n', '<Leader>cp', function () vim.cmd('PickColor') end)
+vim.keymap.set('n', '<Leader>u', function () vim.cmd('UndotreeToggle') end);
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')

@@ -73,6 +73,7 @@ ZSH_THEME="bira"
 # plugins=(git aws)
 # plugins=(git)
 plugins=(git)
+# git plugin README: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git/
 
 zstyle ':omz:update' mode disabled
 
@@ -128,5 +129,7 @@ nvm() {
 export AWS_DEFAULT_PROFILE=SgfMeetupApiAccess-391849688676
 export AWS_PROFILE=SgfMeetupApiAccess-391849688676
 
+alias v="nvim"
 alias lsh="ls -hal"
+alias sc="systemctl"
 alias discord="flatpak run com.discordapp.Discord"
