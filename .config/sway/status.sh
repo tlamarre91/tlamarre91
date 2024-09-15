@@ -10,8 +10,10 @@ uptime_formatted=$(uptime | cut -d ',' -f1  | cut -d ' ' -f4,5)
 # like 2018-10-06 and the time (e.g., 14:01)
 date_formatted=$(date "+%a %F %H:%M:%S")
 
-battery_status=$(acpi)
+battery_status=$(acpi | awk '{for (i=3; i<=NF; i++) printf $i " "; print ""}')
+
+wifi_status=$(nmcli -f IN-USE,SSID,BARS dev wifi | awk '$1 == "*" {$1=$1; for (i=2; i<=NF; i++) printf $i " "; print ""}')
 
 # Emojis and characters for the status bar
 # 💎 💻 💡 🔌 ⚡ 📁 \|
-echo $uptime_formatted ↑ $battery_status 🔋 $date_formatted
+echo "$uptime_formatted ↑    $wifi_status    $battery_status 🔋    $date_formatted"
