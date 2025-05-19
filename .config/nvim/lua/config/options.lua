@@ -2,6 +2,6 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 vim.g.snacks_animate = false
-vim.g.hlsearch = false
-vim.g.relativenumber = false
-vim.g.clipboard = "unnamed"
+vim.o.hlsearch = false
+vim.o.relativenumber = false
+vim.o.clipboard = ""

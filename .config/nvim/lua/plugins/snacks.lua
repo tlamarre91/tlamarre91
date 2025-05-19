@@ -13,7 +13,15 @@ return {
       explorer = { enabled = true },
       indent = { enabled = true },
       input = { enabled = true },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        formatters = {
+          file = {
+            truncate = 80,
+            filename_only = false,
+          },
+        },
+      },
       notifier = { enabled = true },
       quickfile = { enabled = true },
       scope = { enabled = false },
