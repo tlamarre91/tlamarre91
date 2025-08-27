@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -116,6 +116,7 @@ nvm() {
   nvm "$@"
 }
 
+# TODO: why do these hang in zsh...? did they ever work?
 # node() {
 #   load_nvm
 #   node "$@"
@@ -124,6 +125,11 @@ nvm() {
 # npm() {
 #   load_nvm
 #   npm "$@"
+# }
+#
+# pnpm() {
+#   load_nvm
+#   pnpm "$@"
 # }
 
 export AWS_DEFAULT_PROFILE=SgfMeetupApiAccess-391849688676
@@ -138,6 +144,11 @@ alias lsh="ls -hal"
 alias sc="systemctl"
 alias discord="flatpak run com.discordapp.Discord"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  source ~/.zshrc-vscode
+fi
+
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+. "$HOME/.local/bin/env"
