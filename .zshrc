@@ -136,6 +136,7 @@ export AWS_DEFAULT_PROFILE=SgfMeetupApiAccess-391849688676
 export AWS_PROFILE=SgfMeetupApiAccess-391849688676
 
 export PYENV_ROOT="$HOME/.pyenv"
+export GODOT_BIN="/usr/bin/godot-mono"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
@@ -151,4 +152,4 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-# . "$HOME/.local/bin/env"
+. "$HOME/.local/bin/env"

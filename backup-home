@@ -1,3 +1,4 @@
 #!/usr/bin/env zsh
 rsync -avu --delete ~/.config/{nvim,sway,tmux} ~/src/tlamarre91/.config
 rsync -avu ~/.zshrc ~/src/tlamarre91/
+rsync -avu ~/.xinitrc ~/src/tlamarre91/
