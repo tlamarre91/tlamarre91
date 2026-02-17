@@ -1,8 +1,8 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.pyenv/shims:$HOME/go/bin:$HOME/bin:$HOME/p4:/opt/homebrew/bin:$PATH
+export P4CONFIG=$HOME/p4/p4.ini
 
 # Path to your Oh My Zsh installation.
-ZSH=~/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -72,7 +72,7 @@ ZSH_THEME="bira"
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git aws)
 # plugins=(git)
-plugins=(git)
+plugins=(git docker)
 # git plugin README: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git/
 
 zstyle ':omz:update' mode disabled
@@ -81,22 +81,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-export PATH=$PATH:~/bin
 export EDITOR=nvim
 
 export NVM_DIR="$HOME/.nvm"
@@ -132,9 +116,6 @@ nvm() {
 #   pnpm "$@"
 # }
 
-export AWS_DEFAULT_PROFILE=SgfMeetupApiAccess-391849688676
-export AWS_PROFILE=SgfMeetupApiAccess-391849688676
-
 export PYENV_ROOT="$HOME/.pyenv"
 export GODOT_BIN="/usr/bin/godot-mono"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -143,7 +124,12 @@ eval "$(pyenv init -)"
 alias v="nvim"
 alias lsh="ls -hal"
 alias sc="systemctl"
+alias vactivate="source ./venv/bin/activate"
 alias discord="flatpak run com.discordapp.Discord"
+alias lg="lazygit"
+alias grl="git reflog --date=relative"
+
+[[ -f ~/.zshrc.work ]] && source ~/.zshrc.work
 
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   source ~/.zshrc-vscode

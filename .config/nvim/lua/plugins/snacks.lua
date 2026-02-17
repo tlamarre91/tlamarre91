@@ -21,6 +21,12 @@ return {
             filename_only = false,
           },
         },
+        layout = {
+          layout = {
+            width = 0.9,
+            height = 0.9,
+          },
+        },
       },
       notifier = { enabled = true },
       quickfile = { enabled = true },
