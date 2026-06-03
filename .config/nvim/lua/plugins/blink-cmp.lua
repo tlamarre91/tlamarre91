@@ -91,7 +91,8 @@ return {
         end
       end
 
-      -- -- add ai_accept to <Tab> key
+      -- TODO: delete? can i still tab how i like?
+      -- add ai_accept to <Tab> key
       -- if not opts.keymap["<Tab>"] then
       --   if opts.keymap.preset == "super-tab" then -- super-tab
       --     opts.keymap["<Tab>"] = {

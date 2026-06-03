@@ -100,7 +100,6 @@ nvm() {
   nvm "$@"
 }
 
-# TODO: why do these hang in zsh...? did they ever work?
 # node() {
 #   load_nvm
 #   node "$@"
@@ -110,16 +109,6 @@ nvm() {
 #   load_nvm
 #   npm "$@"
 # }
-#
-# pnpm() {
-#   load_nvm
-#   pnpm "$@"
-# }
-
-export PYENV_ROOT="$HOME/.pyenv"
-export GODOT_BIN="/usr/bin/godot-mono"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 alias v="nvim"
 alias lsh="ls -hal"
@@ -131,11 +120,6 @@ alias grl="git reflog --date=relative"
 
 [[ -f ~/.zshrc.work ]] && source ~/.zshrc.work
 
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-  source ~/.zshrc-vscode
-fi
-
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-. "$HOME/.local/bin/env"
