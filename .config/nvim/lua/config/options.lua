@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.g.snacks_animate = false
 vim.o.hlsearch = false
 vim.o.relativenumber = false

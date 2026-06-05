@@ -1,5 +1,12 @@
 return {
-  "sainnhe/sonokai",
+  {
+    "sainnhe/sonokai",
+    priority = 1000,
+    lazy = false,
+    config = function()
+      vim.cmd.colorscheme("sonokai")
+    end,
+  },
 
   {
     "kylechui/nvim-surround",
@@ -18,8 +25,8 @@ return {
     },
     opts = {
       options = {
-        diagnostics = "nvim_lsp",
-        always_show_bufferline = false,
+	diagnostics = "nvim_lsp",
+	always_show_bufferline = false,
       },
     },
   },
